@@ -39,10 +39,10 @@ def display_health():
     global wizard_hp
     global dentist_hp
     global boss_hp
-    print(f"Knight HP: {knight_hp}")
-    print(f"Wizard HP: {wizard_hp}")
-    print(f"Dentist HP: {dentist_hp}")
-    print(f"Boss HP: {boss_hp}")
+    print(f"                                                    Knight HP: {knight_hp}")
+    print(f"                                                    Wizard HP: {wizard_hp}")
+    print(f"                                                    Dentist HP: {dentist_hp}")
+    print(f"                                                    Boss HP: {boss_hp}")
 
 def knight_turn():
     global boss_hp
