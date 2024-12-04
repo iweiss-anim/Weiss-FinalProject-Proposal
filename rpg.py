@@ -9,6 +9,7 @@ knight_cooldown = False
 is_knight_defending = False
 wizard_cooldown = False
 is_wizard_charging = False
+dentist_cooldown = False
 
 def hp_calc():
     global battle_lost
@@ -53,6 +54,7 @@ def knight_turn():
         if knight_move_choice == "ATTACK":
             boss_hp = boss_hp - 40
             print("Knight struck valiantly for 40 damage!")
+            knight_cooldown = False
         elif knight_move_choice == "DEFEND":
             if knight_cooldown == False:
                 is_knight_defending = True
@@ -60,6 +62,7 @@ def knight_turn():
                 print("Knight raises their shield! Next damage negated!")
             elif knight_cooldown == True:
                 print("Knight cannot defend twice in a row!")
+                knight_cooldown = False
 
 def wizard_turn():
     global boss_hp
@@ -92,20 +95,28 @@ def dentist_turn():
         dentist_move_choice = str(input("Dentist: ATTACK or HEAL\n"))
         if dentist_move_choice == "ATTACK":
             boss_hp = boss_hp - 30
-            print("Knight struck valiantly for 40 damage!")
-        elif dentist_move_choice == "DEFEND":
+            print("Dentist jabbed with needles for 30 damage!")
+            dentist_cooldown = False
+        elif dentist_move_choice == "HEAL":
             if dentist_cooldown == False:
                 heal_target = str(input("Heal Target: KNIGHT, WIZARD, or DENTIST\n"))
                 if heal_target == "KNIGHT":
                     knight_hp = knight_hp + 100
+                    print("Dentist gave Knight a check-up! Healed 100 HP!")
                 elif heal_target == "WIZARD":
                     wizard_hp = wizard_hp + 100
+                    print("Dentist gave Wizard a check-up! Healed 100 HP!")
                 elif heal_target == "DENTIST":
                     dentist_hp = dentist_hp + 100
+                    print("Dentist gave themselves a check-up!? Healed 100 HP!")
+                elif heal_target == "BOSS":
+                    boss_hp = boss_hp + 100
+                    print("Dentist gave the boss a check-up!? WHY!? Healed 100 HP...")
                 dentist_cooldown = True
                 print("Knight raises their shield! Next damage negated!")
             elif dentist_cooldown == True:
-                print("Knight cannot heal twice in a row!")
+                print("Dentist cannot heal twice in a row!")
+                dentist_cooldown = False
 
 while battling is True:
     knight_turn()
