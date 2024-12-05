@@ -1,3 +1,5 @@
+import random
+
 battling = True
 battle_lost = False
 battle_won = False
@@ -10,6 +12,7 @@ is_knight_defending = False
 wizard_cooldown = False
 is_wizard_charging = False
 dentist_cooldown = False
+is_boss_charging = False
 
 def hp_calc():
     global battle_lost
@@ -33,16 +36,26 @@ def hp_calc():
         dentist_hp = 100
     if boss_hp > 500:
         boss_hp = 500
+    if knight_hp < 0:
+        knight_hp = 0
+    if wizard_hp < 0:
+        wizard_hp = 0
+    if dentist_hp < 0:
+        dentist_hp = 0
 
 def display_health():
-    global knight_hp
-    global wizard_hp
-    global dentist_hp
-    global boss_hp
-    print(f"                                                    Knight HP: {knight_hp}")
-    print(f"                                                    Wizard HP: {wizard_hp}")
-    print(f"                                                    Dentist HP: {dentist_hp}")
-    print(f"                                                    Boss HP: {boss_hp}")
+    display_health_ask = str(input("Check HP Totals? YES or NO\n"))
+    if display_health_ask == "YES":
+        global knight_hp
+        global wizard_hp
+        global dentist_hp
+        global boss_hp
+        print(f"                                                    \nKnight HP: {knight_hp}")
+        print(f"                                                    Wizard HP: {wizard_hp}")
+        print(f"                                                    Dentist HP: {dentist_hp}")
+        print(f"                                                    Boss HP: {boss_hp}/n")
+    elif display_health_ask == "NO":
+        print("\n")
 
 def knight_turn():
     global boss_hp
