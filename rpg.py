@@ -131,6 +131,15 @@ def dentist_turn():
                 print("Dentist cannot heal twice in a row!")
                 dentist_cooldown = False
 
+def boss_turn():
+    boss_move_choice = random.randint(1,3)
+    if boss_move_choice == 1:
+        print("BOSS ATTACK 1")
+    elif boss_move_choice == 2:
+        print("BOSS ATTACK 2")
+    elif boss_move_choice == 3:
+        print("BOSS ATTACK 3")
+
 while battling is True:
     knight_turn()
     hp_calc()
