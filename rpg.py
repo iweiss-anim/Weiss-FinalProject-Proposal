@@ -1,4 +1,5 @@
 import random
+import time
 
 battling = True
 battle_lost = False
@@ -6,7 +7,7 @@ battle_won = False
 knight_hp = 200
 wizard_hp = 150
 dentist_hp = 100
-boss_hp = 500
+boss_hp = 2000
 knight_cooldown = False
 is_knight_defending = False
 is_wizard_charging = False
@@ -15,6 +16,12 @@ is_boss_charging = False
 is_knight_down = False
 is_wizard_down = False
 is_dentist_down = False
+
+def cutscene_print(text):
+    for character in text:
+        print(character, end="", flush=True)
+        time.sleep(0.05)
+    print()
 
 def hp_calc():
     global battle_lost
@@ -74,6 +81,15 @@ def display_health():
     elif display_health_ask == "NO":
         print("\n")
 
+def opening_cutscene():
+    cutscene_print("Under the blood moon, an ancient evil stirs... (ENTER to continue)")
+    input()
+    cutscene_print("The most diabolical of eldritch forces... CAPITALISM")
+    input()
+    cutscene_print("And with it, our three intrepid heroes must face... The BOSS...")
+    input()
+    print("\nTHE BOSS APPROACHES!\n\n")
+    
 def knight_turn():
     global boss_hp
     global knight_hp
@@ -84,15 +100,15 @@ def knight_turn():
         is_knight_defending = False
         if knight_move_choice == "ATTACK":
             boss_hp = boss_hp - 40
-            print("Knight struck valiantly for 40 damage!\n")
+            cutscene_print("Knight struck valiantly for 40 damage!\n")
             knight_cooldown = False
         elif knight_move_choice == "DEFEND":
             if knight_cooldown == False:
                 is_knight_defending = True
                 knight_cooldown = True
-                print("Knight raises their shield! Next damage negated!\n")
+                cutscene_print("Knight raises their shield! Next damage negated!\n")
             elif knight_cooldown == True:
-                print("Knight cannot defend twice in a row!\n")
+                cutscene_print("Knight cannot defend twice in a row!\n")
                 knight_cooldown = False
 
 def wizard_turn():
@@ -105,13 +121,13 @@ def wizard_turn():
             wizard_move_choice = str(input("Wizard: ATTACK or CHARGE\n"))
             if wizard_move_choice == "ATTACK":
                 boss_hp = boss_hp - 50
-                print("Wizard cast a fireball for 50 damage!\n")
+                cutscene_print("Wizard cast a fireball for 50 damage!\n")
             elif wizard_move_choice == "CHARGE":
                 is_wizard_charging = True
-                print("Wizard begins to cast a powerful spell!\n")
+                cutscene_print("Wizard begins to cast a powerful spell!\n")
         elif is_wizard_charging == True:
             boss_hp = boss_hp - 150
-            print("Wizard summons a thunderstorm for 150 damage!\n")
+            cutscene_print("Wizard summons a thunderstorm for 150 damage!\n")
             is_wizard_charging = False
 
 def dentist_turn():
@@ -125,7 +141,7 @@ def dentist_turn():
         dentist_move_choice = str(input("Dentist: ATTACK or HEAL\n"))
         if dentist_move_choice == "ATTACK":
             boss_hp = boss_hp - 30
-            print("Dentist jabbed with needles for 30 damage!\n")
+            cutscene_print("Dentist jabbed with needles for 30 damage!\n")
             dentist_cooldown = False
         elif dentist_move_choice == "HEAL":
             if dentist_cooldown == False:
@@ -133,21 +149,21 @@ def dentist_turn():
                 if heal_target == "KNIGHT":
                     knight_hp = knight_hp + 100
                     dentist_cooldown = True
-                    print("Dentist gave Knight a check-up! Healed 100 HP!\n")
+                    cutscene_print("Dentist gave Knight a check-up! Healed 100 HP!\n")
                 elif heal_target == "WIZARD":
                     wizard_hp = wizard_hp + 100
                     dentist_cooldown = True
-                    print("Dentist gave Wizard a check-up! Healed 100 HP!\n")
+                    cutscene_print("Dentist gave Wizard a check-up! Healed 100 HP!\n")
                 elif heal_target == "DENTIST":
                     dentist_hp = dentist_hp + 100
                     dentist_cooldown = True
-                    print("Dentist gave themselves a check-up!? Healed 100 HP!\n")
+                    cutscene_print("Dentist gave themselves a check-up!? Healed 100 HP!\n")
                 elif heal_target == "BOSS":
                     boss_hp = boss_hp + 100
                     dentist_cooldown = True
-                    print("Dentist gave the boss a check-up!? WHY!? Healed 100 HP...\n")
+                    cutscene_print("Dentist gave the boss a check-up!? WHY!? Healed 100 HP...\n")
             elif dentist_cooldown == True:
-                print("Dentist cannot heal twice in a row!\n")
+                cutscene_print("Dentist cannot heal twice in a row!\n")
                 dentist_cooldown = False
 
 def boss_turn():
@@ -156,7 +172,7 @@ def boss_turn():
     global wizard_hp
     global dentist_hp
     global is_boss_charging
-    global living_units
+    global is_knight_defending
     if is_boss_charging == False:
         boss_move_choice = random.randint(0,2)
         if boss_move_choice == 0:
@@ -166,16 +182,16 @@ def boss_turn():
                     if is_knight_down == False:
                         knight_hp = knight_hp - 50
                         print("Boss attacks!")
-                        print("Boss attacked Knight for 50 damage!")
+                        cutscene_print("Boss attacked Knight for 50 damage!")
                     elif is_knight_down == True:
                         if is_wizard_down == False:
                             wizard_hp = wizard_hp - 50
                             print("Boss attacks!")
-                            print("Boss attacked Wizard for 50 damage!")
+                            cutscene_print("Boss attacked Wizard for 50 damage!")
                         elif is_wizard_down == True:
                             dentist_hp = dentist_hp - 50
                             print("Boss attacks!")
-                            print("Boss attacked Dentist for 50 damage!")
+                            cutscene_print("Boss attacked Dentist for 50 damage!")
                 elif boss_attack_target == 1:
                     if is_wizard_down == False:
                             wizard_hp = wizard_hp - 50
@@ -185,48 +201,92 @@ def boss_turn():
                         if is_dentist_down == False:
                             dentist_hp = dentist_hp - 50
                             print("Boss attacks!")
-                            print("Boss attacked Dentist for 50 damage!")
+                            cutscene_print("Boss attacked Dentist for 50 damage!")
                         elif is_dentist_down == True:
                             knight_hp = knight_hp - 50
                             print("Boss attacks!")
-                            print("Boss attacked Knight for 50 damage!")
+                            cutscene_print("Boss attacked Knight for 50 damage!")
                 elif boss_attack_target == 2:
                     if is_dentist_down == False:
                             dentist_hp = dentist_hp - 50
                             print("Boss attacks!")
-                            print("Boss attacked Dentist for 50 damage!")
+                            cutscene_print("Boss attacked Dentist for 50 damage!")
                     elif is_dentist_down == True:
                         if is_knight_down == False:
                             knight_hp = knight_hp - 50
                             print("Boss attacks!")
-                            print("Boss attacked Knight for 50 damage!")
+                            cutscene_print("Boss attacked Knight for 50 damage!")
                         elif is_knight_down == True:
                             wizard_hp = wizard_hp - 50
                             print("Boss attacks!")
-                            print("Boss attacked Wizard for 50 damage!")
+                            cutscene_print("Boss attacked Wizard for 50 damage!")
             elif is_knight_defending == True:
                 print("Boss attacks!")
-                print("Knight defended the party! Damage negated!")
+                cutscene_print("Knight defended the party! Damage negated!")
         elif boss_move_choice == 1:
             if is_knight_defending == False:
                 knight_hp = knight_hp - 30
                 wizard_hp = wizard_hp - 30
                 dentist_hp = dentist_hp - 30
                 print("Boss pelts the party with moderately-sized rocks!")
-                print("30 damage to all party members!")
+                cutscene_print("30 damage to all party members!")
             elif is_knight_defending == True:
                 print("Boss pelts the party with moderately-sized rocks!")
-                print("Knight defended the party! Damage negated!")
+                cutscene_print("Knight defended the party! Damage negated!")
         elif boss_move_choice == 2:
-            # RANDOMLY CHOOSE PARTY MEMBER
-            boss_charge_target = random.randint(0,2)
-            if boss_charge_target == 0:
-                if is_knight_down == False:
-                    knight_hp = knight_hp
-            print("BOSS ATTACK 3")
-
+            is_boss_charging = True
+            cutscene_print("Boss began charging a POWERFUL ATTACK!")
     elif is_boss_charging == True:
-        print("BOSS USES THEIR CHARGED ATTACK")
+        if is_knight_defending == False:
+            boss_attack_target = random.randint(0,2)
+            if boss_attack_target == 0:
+                if is_knight_down == False:
+                    knight_hp = knight_hp - 999
+                    print("BOSS ATTACKS WITH FULL FORCE!")
+                    cutscene_print("Boss strikes down Knight! 999 Damage!")
+                elif is_knight_down == True:
+                    if is_wizard_down == False:
+                        wizard_hp = wizard_hp - 999
+                        print("BOSS ATTACKS WITH FULL FORCE!")
+                        cutscene_print("Boss strikes down Wizard! 999 Damage!")
+                    elif is_wizard_down == True:
+                        dentist_hp = dentist_hp - 999
+                        print("BOSS ATTACKS WITH FULL FORCE!")
+                        cutscene_print("Boss strikes down Dentist! 999 Damage!")
+            elif boss_attack_target == 1:
+                if is_wizard_down == False:
+                        wizard_hp = wizard_hp - 999
+                        print("BOSS ATTACKS WITH FULL FORCE!")
+                        cutscene_print("Boss strikes down Wizard! 999 Damage!")
+                elif is_wizard_down == True:
+                    if is_dentist_down == False:
+                        dentist_hp = dentist_hp - 999
+                        print("BOSS ATTACKS WITH FULL FORCE!")
+                        cutscene_print("Boss strikes down Dentist! 999 Damage!")
+                    elif is_dentist_down == True:
+                        knight_hp = knight_hp - 999
+                        print("BOSS ATTACKS WITH FULL FORCE!")
+                        cutscene_print("Boss strikes down Knight! 999 Damage!")
+            elif boss_attack_target == 2:
+                if is_dentist_down == False:
+                        dentist_hp = dentist_hp - 999
+                        print("BOSS ATTACKS WITH FULL FORCE!")
+                        cutscene_print("Boss strikes down Dentist! 999 Damage!")
+                elif is_dentist_down == True:
+                    if is_knight_down == False:
+                        knight_hp = knight_hp - 999
+                        print("BOSS ATTACKS WITH FULL FORCE!")
+                        cutscene_print("Boss strikes down Knight! 999 Damage!")
+                    elif is_knight_down == True:
+                        wizard_hp = wizard_hp - 999
+                        print("BOSS ATTACKS WITH FULL FORCE!")
+                        cutscene_print("Boss strikes down Wizard! 999 Damage!")
+        elif is_knight_defending == True:
+            print("Boss attacks!")
+            cutscene_print("Knight defended the party! Damage negated!")
+        is_boss_charging == False
+
+opening_cutscene()
 
 while battling is True:
     knight_turn()
