@@ -81,6 +81,7 @@ def knight_turn():
     global is_knight_defending
     if knight_hp > 0:
         knight_move_choice = str(input("Knight: ATTACK or DEFEND\n"))
+        is_knight_defending = False
         if knight_move_choice == "ATTACK":
             boss_hp = boss_hp - 40
             print("Knight struck valiantly for 40 damage!\n")
@@ -164,8 +165,10 @@ def boss_turn():
                 wizard_hp = wizard_hp - 30
                 dentist_hp = dentist_hp - 30
                 print("Boss pelts the party with moderately-sized rocks!")
+                print("30 damage to all party members!")
             elif is_knight_defending == True:
-                print("Knight defended the party!")
+                print("Boss pelts the party with moderately-sized rocks!")
+                print("Knight defended the party! Damage negated!")
         elif boss_move_choice == 3:
             # RANDOMLY CHOOSE PARTY MEMBER
             # boss_charge_target == 
@@ -182,6 +185,9 @@ while battling is True:
     hp_calc()
     display_health()
     dentist_turn()
+    hp_calc()
+    display_health()
+    boss_turn()
     hp_calc()
     display_health()
 
