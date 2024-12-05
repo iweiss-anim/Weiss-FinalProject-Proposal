@@ -120,6 +120,7 @@ def dentist_turn():
     global knight_hp
     global wizard_hp
     global is_boss_charging
+    global dentist_cooldown
     if dentist_hp > 0:
         dentist_move_choice = str(input("Dentist: ATTACK or HEAL\n"))
         if dentist_move_choice == "ATTACK":
@@ -131,18 +132,20 @@ def dentist_turn():
                 heal_target = str(input("Heal Target: KNIGHT, WIZARD, or DENTIST\n"))
                 if heal_target == "KNIGHT":
                     knight_hp = knight_hp + 100
+                    dentist_cooldown = True
                     print("Dentist gave Knight a check-up! Healed 100 HP!\n")
                 elif heal_target == "WIZARD":
                     wizard_hp = wizard_hp + 100
+                    dentist_cooldown = True
                     print("Dentist gave Wizard a check-up! Healed 100 HP!\n")
                 elif heal_target == "DENTIST":
                     dentist_hp = dentist_hp + 100
+                    dentist_cooldown = True
                     print("Dentist gave themselves a check-up!? Healed 100 HP!\n")
                 elif heal_target == "BOSS":
                     boss_hp = boss_hp + 100
+                    dentist_cooldown = True
                     print("Dentist gave the boss a check-up!? WHY!? Healed 100 HP...\n")
-                dentist_cooldown = True
-                print("Knight raises their shield! Next damage negated!\n")
             elif dentist_cooldown == True:
                 print("Dentist cannot heal twice in a row!\n")
                 dentist_cooldown = False
@@ -157,33 +160,53 @@ def boss_turn():
     if is_boss_charging == False:
         boss_move_choice = random.randint(0,2)
         if boss_move_choice == 0:
-            boss_attack_target = random.randint(0,2)
-            if boss_attack_target == 0:
-                if is_knight_down == False:
-                    knight_hp = knight_hp - 50
-                elif is_knight_down == True:
-                    if is_wizard_down == False:
-                        wizard_hp = wizard_hp - 50
-                    elif is_wizard_down == True:
-                        dentist_hp = dentist_hp - 50
-            elif boss_attack_target == 1:
-                if is_wizard_down == False:
-                        wizard_hp = wizard_hp - 50
-                elif is_wizard_down == True:
-                    if is_dentist_down == False:
-                        dentist_hp = dentist_hp - 50
-                    elif is_dentist_down == True:
-                        knight_hp = knight_hp - 50
-            elif boss_attack_target == 2:
-                if is_dentist_down == False:
-                        dentist_hp = dentist_hp - 50
-                elif is_dentist_down == True:
+            if is_knight_defending == False:
+                boss_attack_target = random.randint(0,2)
+                if boss_attack_target == 0:
                     if is_knight_down == False:
                         knight_hp = knight_hp - 50
+                        print("Boss attacks!")
+                        print("Boss attacked Knight for 50 damage!")
                     elif is_knight_down == True:
-                        wizard_hp = wizard_hp - 50
-
-            print("BOSS ATTACK 1")
+                        if is_wizard_down == False:
+                            wizard_hp = wizard_hp - 50
+                            print("Boss attacks!")
+                            print("Boss attacked Wizard for 50 damage!")
+                        elif is_wizard_down == True:
+                            dentist_hp = dentist_hp - 50
+                            print("Boss attacks!")
+                            print("Boss attacked Dentist for 50 damage!")
+                elif boss_attack_target == 1:
+                    if is_wizard_down == False:
+                            wizard_hp = wizard_hp - 50
+                            print("Boss attacks!")
+                            print("Boss attacked Wizard for 50 damage!")
+                    elif is_wizard_down == True:
+                        if is_dentist_down == False:
+                            dentist_hp = dentist_hp - 50
+                            print("Boss attacks!")
+                            print("Boss attacked Dentist for 50 damage!")
+                        elif is_dentist_down == True:
+                            knight_hp = knight_hp - 50
+                            print("Boss attacks!")
+                            print("Boss attacked Knight for 50 damage!")
+                elif boss_attack_target == 2:
+                    if is_dentist_down == False:
+                            dentist_hp = dentist_hp - 50
+                            print("Boss attacks!")
+                            print("Boss attacked Dentist for 50 damage!")
+                    elif is_dentist_down == True:
+                        if is_knight_down == False:
+                            knight_hp = knight_hp - 50
+                            print("Boss attacks!")
+                            print("Boss attacked Knight for 50 damage!")
+                        elif is_knight_down == True:
+                            wizard_hp = wizard_hp - 50
+                            print("Boss attacks!")
+                            print("Boss attacked Wizard for 50 damage!")
+            elif is_knight_defending == True:
+                print("Boss attacks!")
+                print("Knight defended the party! Damage negated!")
         elif boss_move_choice == 1:
             if is_knight_defending == False:
                 knight_hp = knight_hp - 30
