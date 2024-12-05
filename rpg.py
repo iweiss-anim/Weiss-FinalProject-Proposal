@@ -153,13 +153,38 @@ def boss_turn():
     global wizard_hp
     global dentist_hp
     global is_boss_charging
+    global living_units
     if is_boss_charging == False:
-        boss_move_choice = random.randint(1,3)
-        if boss_move_choice == 1:
-            # RANDOMLY CHOOSE PARTY MEMBER
-            # boss_attack_target == 
+        boss_move_choice = random.randint(0,2)
+        if boss_move_choice == 0:
+            boss_attack_target = random.randint(0,2)
+            if boss_attack_target == 0:
+                if is_knight_down == False:
+                    knight_hp = knight_hp - 50
+                elif is_knight_down == True:
+                    if is_wizard_down == False:
+                        wizard_hp = wizard_hp - 50
+                    elif is_wizard_down == True:
+                        dentist_hp = dentist_hp - 50
+            elif boss_attack_target == 1:
+                if is_wizard_down == False:
+                        wizard_hp = wizard_hp - 50
+                elif is_wizard_down == True:
+                    if is_dentist_down == False:
+                        dentist_hp = dentist_hp - 50
+                    elif is_dentist_down == True:
+                        knight_hp = knight_hp - 50
+            elif boss_attack_target == 2:
+                if is_dentist_down == False:
+                        dentist_hp = dentist_hp - 50
+                elif is_dentist_down == True:
+                    if is_knight_down == False:
+                        knight_hp = knight_hp - 50
+                    elif is_knight_down == True:
+                        wizard_hp = wizard_hp - 50
+
             print("BOSS ATTACK 1")
-        elif boss_move_choice == 2:
+        elif boss_move_choice == 1:
             if is_knight_defending == False:
                 knight_hp = knight_hp - 30
                 wizard_hp = wizard_hp - 30
@@ -169,9 +194,12 @@ def boss_turn():
             elif is_knight_defending == True:
                 print("Boss pelts the party with moderately-sized rocks!")
                 print("Knight defended the party! Damage negated!")
-        elif boss_move_choice == 3:
+        elif boss_move_choice == 2:
             # RANDOMLY CHOOSE PARTY MEMBER
-            # boss_charge_target == 
+            boss_charge_target = random.randint(0,2)
+            if boss_charge_target == 0:
+                if is_knight_down == False:
+                    knight_hp = knight_hp
             print("BOSS ATTACK 3")
 
     elif is_boss_charging == True:
