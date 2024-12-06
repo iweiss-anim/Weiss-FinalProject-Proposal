@@ -20,7 +20,7 @@ is_dentist_down = False
 def cutscene_print(text):
     for character in text:
         print(character, end="", flush=True)
-        time.sleep(0.05)
+        time.sleep(0.02)
     print()
 
 def hp_calc():
@@ -58,8 +58,8 @@ def hp_calc():
         wizard_hp = 150
     if dentist_hp > 100:
         dentist_hp = 100
-    if boss_hp > 500:
-        boss_hp = 500
+    if boss_hp > 2000:
+        boss_hp = 2000
     if knight_hp < 0:
         knight_hp = 0
     if wizard_hp < 0:
@@ -244,47 +244,58 @@ def boss_turn():
                     knight_hp = knight_hp - 999
                     print("BOSS ATTACKS WITH FULL FORCE!")
                     cutscene_print("Boss strikes down Knight! 999 Damage!")
+                    is_boss_charging = False
                 elif is_knight_down == True:
                     if is_wizard_down == False:
                         wizard_hp = wizard_hp - 999
                         print("BOSS ATTACKS WITH FULL FORCE!")
                         cutscene_print("Boss strikes down Wizard! 999 Damage!")
+                        is_boss_charging = False
                     elif is_wizard_down == True:
                         dentist_hp = dentist_hp - 999
                         print("BOSS ATTACKS WITH FULL FORCE!")
                         cutscene_print("Boss strikes down Dentist! 999 Damage!")
+                        is_boss_charging = False
             elif boss_attack_target == 1:
                 if is_wizard_down == False:
                         wizard_hp = wizard_hp - 999
                         print("BOSS ATTACKS WITH FULL FORCE!")
                         cutscene_print("Boss strikes down Wizard! 999 Damage!")
+                        is_boss_charging = False
                 elif is_wizard_down == True:
                     if is_dentist_down == False:
                         dentist_hp = dentist_hp - 999
                         print("BOSS ATTACKS WITH FULL FORCE!")
                         cutscene_print("Boss strikes down Dentist! 999 Damage!")
+                        is_boss_charging = False
                     elif is_dentist_down == True:
                         knight_hp = knight_hp - 999
                         print("BOSS ATTACKS WITH FULL FORCE!")
                         cutscene_print("Boss strikes down Knight! 999 Damage!")
+                        is_boss_charging = False
             elif boss_attack_target == 2:
                 if is_dentist_down == False:
                         dentist_hp = dentist_hp - 999
                         print("BOSS ATTACKS WITH FULL FORCE!")
                         cutscene_print("Boss strikes down Dentist! 999 Damage!")
+                        is_boss_charging = False
                 elif is_dentist_down == True:
                     if is_knight_down == False:
                         knight_hp = knight_hp - 999
                         print("BOSS ATTACKS WITH FULL FORCE!")
                         cutscene_print("Boss strikes down Knight! 999 Damage!")
+                        is_boss_charging = False
                     elif is_knight_down == True:
                         wizard_hp = wizard_hp - 999
                         print("BOSS ATTACKS WITH FULL FORCE!")
                         cutscene_print("Boss strikes down Wizard! 999 Damage!")
+                        is_boss_charging = False
+            is_boss_charging = False
         elif is_knight_defending == True:
             print("Boss attacks!")
             cutscene_print("Knight defended the party! Damage negated!")
-        is_boss_charging == False
+            is_boss_charging = False
+        is_boss_charging = False
 
 opening_cutscene()
 
