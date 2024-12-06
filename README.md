@@ -1,6 +1,6 @@
 Project Title: RPGs: "Just How You Remember 'Em!"
 
-Video URL: tbd
+Video URL: https://youtu.be/XSJHXDaGNWk
 GitHub URL: https://github.com/iweiss-anim/Weiss-FinalProject-Proposal
 
 *RPGs: "Just How You Remember 'Em!"* is a text-based, RPG-inspired demo, containing a fully-programmed battle system and a boss fight. Taking inspiration from classic RPG tropes, the demo utilizes traditional roles for two of its party members, being the Knight and the Wizard. The third party member, however, being the group's healer, is a dentist. The enemy present in the boss fight is simply named "Boss". While this started out as a placeholder name, I later decided to keep it, with the context of the Boss being an actual corporate boss of a company. 
